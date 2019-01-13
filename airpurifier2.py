@@ -22,9 +22,12 @@ AIR_PUR_IP = '192.168.1.111'
 
 
 class AirPurifier2App(QMainWindow, Ui_MainWindow):
-    @staticmethod
-    def init_device() -> AirPurifier:
-        return AirPurifier(AIR_PUR_IP, TOKEN)
+    def init_device(self) -> AirPurifier or None:
+        try:
+            return AirPurifier(AIR_PUR_IP, TOKEN)
+        except ValueError:
+            self.statusbar.showMessage('Invalid TOKEN format', 9999)
+            return None
 
     def init_state_combo(self):
         self.stateComboBox.addItem('Idle (OFF)', OperationMode.Idle)
