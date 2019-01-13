@@ -17,7 +17,7 @@ except ImportError:
 
 from mainwindow import Ui_MainWindow
 
-TOKEN = 'your device token here'
+TOKEN = 'ffffffffffffffffffffffffffffffff'
 AIR_PUR_IP = '192.168.1.111'
 
 
