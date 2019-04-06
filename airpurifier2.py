@@ -4,6 +4,7 @@ import sys
 try:
     from PyQt5.QtWidgets import QApplication, QMainWindow
     from PyQt5.QtCore import QTimer
+    from PyQt5.QtWidgets import QMessageBox
 except ImportError:
     print('PyQt5 is required to run this script')
     sys.exit(1)
@@ -26,8 +27,9 @@ class AirPurifier2App(QMainWindow, Ui_MainWindow):
         try:
             return AirPurifier(AIR_PUR_IP, TOKEN)
         except ValueError:
-            self.statusbar.showMessage('Invalid TOKEN format', 9999)
-            return None
+            QMessageBox.warning(self, 'Token error',
+                                'Token is invalid.\nPlease check the device token')
+            sys.exit(1)
 
     def init_state_combo(self):
         self.stateComboBox.addItem('Idle (OFF)', OperationMode.Idle)
@@ -132,6 +134,7 @@ if __name__ == '__main__':
         window = AirPurifier2App()
         window.show()
         app.exec_()
-    except miio_exceptions.DeviceException as e:
-        print(e)
+    except miio_exceptions.DeviceException as ex:
+        QMessageBox.warning(None, "Device error",
+                            f'{ex}\nPlease check the device IP address')
         sys.exit(1)
