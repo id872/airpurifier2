@@ -136,5 +136,5 @@ if __name__ == '__main__':
         app.exec_()
     except miio_exceptions.DeviceException as ex:
         QMessageBox.warning(None, "Device error",
-                            f'{ex}\nPlease check the device IP address')
+                            f'{ex}')
         sys.exit(1)
